@@ -1,29 +1,40 @@
 import m from 'mithril'
 
-import { classes } from '../util'
+import { twComponent } from '../util'
 
 import JsRuntime from './jsRuntime'
 import Console from './console'
+import Button from './button'
 
 import { SampleFunctions } from "../syntheticFns"
 
-let UserSpace = classes` flex flex-col flex-grow-3 p-4 bg-blue-100 `
-let Button = 'button.uk-button.uk-button-primary'
+let UserSpace = twComponent(' flex flex-col flex-grow-3 p-4 bg-blue-100 ')
+
+let blueButtonClass = ' bg-blue-600 text-white '
 
 export default () => ({
   view: ({ attrs: { states, actions } }) => m(
     UserSpace,
     m('h2', 'User Space'),
     m(
-      classes` flex flex-row `,
+      twComponent(' flex flex-row flex-grow '),
       m(JsRuntime, { states, actions }),
       m(Console),
     ),
     m(
-      'div', // TODO  Componentize these
-      m(Button, { onclick: () => actions.SimulateClick(SampleFunctions.twoCalls()) }, 'Sym Fn'),
-      m(Button, 'Sym Net Call'),
-      m(Button, 'Sym Timeout'),
+      'div',
+      m(Button, {
+        class: blueButtonClass,
+        onclick: () => actions.SimulateClick(SampleFunctions.twoCalls()),
+      }, 'Sym Fn'),
+      m(Button, {
+        class: blueButtonClass,
+        onclick: () => actions.SimulateClick(SampleFunctions.netCall('oneCalls')),
+      }, 'Sym Net Call'),
+      m(Button, {
+        class: blueButtonClass,
+        onclick: () => actions.SimulateClick(SampleFunctions.timeoutCall(1200, 'netCall')),
+      }, 'Sym Timeout'),
     ),
   ),
 })

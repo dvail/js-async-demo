@@ -2,6 +2,24 @@
 # yarn lockfile v1
 
 
+"@arrows/array@^0.4.9":
+  version "0.4.9"
+  resolved "https://registry.yarnpkg.com/@arrows/array/-/array-0.4.9.tgz#20b6bf8b1314ac01801102cc809f5e24780f9a8a"
+
+"@arrows/composition@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@arrows/composition/-/composition-0.2.5.tgz#246679fe2f23f144fa62452920642d46ce84392a"
+  dependencies:
+    "@arrows/array" "^0.4.9"
+
+"@arrows/multimethod@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@arrows/multimethod/-/multimethod-0.9.0.tgz#329b17226431ff9d27a0595f949ca943711eba2b"
+  dependencies:
+    "@arrows/array" "^0.4.9"
+    "@arrows/composition" "^0.2.5"
+    fast-deep-equal "^2.0.1"
+
 "@babel/cli@^7.4.4":
   version "7.6.2"
   resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.6.2.tgz#4ce8b5b4b2e4b4c1b7bd841cec62085e2dfc4465"

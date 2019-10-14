@@ -1,6 +1,8 @@
 import stream from 'mithril/stream'
 import produce from 'immer'
 import _ from 'lodash'
+import { multi, method } from '@arrows/multimethod'
+
 
 import { SampleFunctions } from './syntheticFns'
 
@@ -9,6 +11,31 @@ export function ThreadModel(fn) {
     callstack: fn ? [fn] : [],
   }
 }
+
+const execLine = multi(
+  (nextState, { type }) => type,
+
+  method('runcode', () => {
+    // TODO log to virtual console
+  }),
+
+  method('fnCall', (nextState, line, thread) => {
+    thread.callstack.push(SampleFunctions[line.fn]())
+  }),
+
+  method('netCall', (nextState, line) => {
+    nextState.networkCalls.push({
+      fn: SampleFunctions[line.fn](),
+    })
+  }),
+
+  method('timeoutCall', (nextState, line) => {
+    nextState.timeouts.push({
+      fn: SampleFunctions[line.fn](),
+      delay: line.delay,
+    })
+  }),
+)
 
 export default function initMeiosis(initialState = {}) {
   let update = stream()
@@ -41,27 +68,6 @@ export default function initMeiosis(initialState = {}) {
         next.threads[idleThreadIndex] = ThreadModel(nextFn)
       }
     }),
-    ProcessThreads: produceUpdate((prev, next) => {
-      // TODO Refactor this
-      next.threads.forEach(t => {
-        let topOfStack = _.last(t.callstack, null)
-
-        if (!topOfStack) return
-
-        let nextLine = topOfStack.lines.find(l => !l.done)
-
-        if (!nextLine) {
-          t.callstack.pop()
-          return
-        }
-
-        if (nextLine.type === 'fnCall') {
-          t.callstack.push(SampleFunctions[nextLine.fn]())
-        }
-
-        nextLine.done = true
-      })
-    }),
     SimulateClick: produceUpdate((prev, next, synthCallback) => {
       next.eventQueue.push(synthCallback)
     }),
@@ -71,6 +77,24 @@ export default function initMeiosis(initialState = {}) {
     AddCpu: produceUpdate((prev, next) => {
       next.cpus.push({})
     }),
+    ProcessThreads: produceUpdate((prev, next) => {
+      next.threads.forEach(thread => {
+        let topOfStack = _.last(thread.callstack, null)
+
+        if (!topOfStack) return
+
+        let nextLine = topOfStack.lines.find(l => !l.done)
+
+        if (!nextLine) {
+          thread.callstack.pop()
+          return
+        }
+
+        execLine(next, nextLine, thread)
+        nextLine.done = true
+      })
+    }),
+
   }
 
   return {

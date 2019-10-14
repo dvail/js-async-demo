@@ -1,12 +1,12 @@
 import m from 'mithril'
 
-import { classes } from '../util'
+import { twComponent } from '../util'
 
-let EventQueue = classes` uk-card uk-card-default `
-let Heading = classes` uk-card-heading `
-let EventQueueLayout = classes` uk-card-body flex flex-row-reverse `
+let EventQueue = twComponent(' bg-white ')
+let Heading = twComponent(' text-lg ')
+let EventQueueLayout = twComponent('  flex flex-row-reverse ')
 
-let PendingFn = classes` h-20 w-20 bg-blue-900 `
+let PendingFn = twComponent(' h-20 w-20 bg-blue-900 ')
 
 export default ({ attrs: { states, actions } }) => ({
   view: () => m(

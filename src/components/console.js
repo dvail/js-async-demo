@@ -1,15 +1,15 @@
 
 import m from 'mithril'
 
-import { classes } from '../util'
+import { twComponent } from '../util'
 
-let Console = classes` uk-card uk-card-default flex-grow `
-let Heading = classes` uk-card-heading `
+let Console = twComponent(' bg-white flex-grow ')
+let Heading = twComponent(' text-lg ')
 
 export default ({ attrs: { states, actions } }) => ({
   view: () => m(
     Console,
     m(Heading, 'Console'),
-    m('.uk-card-body'),
+    m('div'),
   ),
 })

@@ -37,20 +37,19 @@ export const SampleFunctions = {
       { type: SyntheticFnLineType.RUN_CODE },
     ],
   }),
-  netCall: () => ({
+  netCall: fn => ({
     lines: [
       { type: SyntheticFnLineType.RUN_CODE },
-      { type: SyntheticFnLineType.NET_CALL, fn: 'twoCalls' },
       { type: SyntheticFnLineType.RUN_CODE },
-      { type: SyntheticFnLineType.NET_CALL, fn: 'noCalls' },
+      { type: SyntheticFnLineType.NET_CALL, fn },
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.RUN_CODE },
     ],
   }),
-  timeoutCall: () => ({
+  timeoutCall: (delay, fn) => ({
     lines: [
       { type: SyntheticFnLineType.RUN_CODE },
-      { type: SyntheticFnLineType.TIMEOUT_CALL, fn: 'oneCall' },
+      { type: SyntheticFnLineType.TIMEOUT_CALL, fn, delay },
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.RUN_CODE },
