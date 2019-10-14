@@ -47,10 +47,12 @@ export default function initMeiosis(initialState = {}) {
     }),
 
     method('timeoutCall', (nextState, line) => {
-      nextState.timeouts.push({
-        fn: SampleFunctions[line.fn](),
-        delay: line.delay,
-      })
+      let callObj = { fn: SampleFunctions[line.fn]() }
+      nextState.timeouts.push(callObj)
+
+      setTimeout(() => {
+        actions.TimeoutResolved(callObj)
+      }, line.delay)
     }),
   )
 
@@ -74,6 +76,10 @@ export default function initMeiosis(initialState = {}) {
     }),
     NetworkCallResolved: produceUpdate((prev, next, callObj) => {
       next.networkCalls = next.networkCalls.filter(nc => nc === callObj)
+      next.eventQueue.push(callObj.fn)
+    }),
+    TimeoutResolved: produceUpdate((prev, next, callObj) => {
+      next.timeouts = next.timeouts.filter(nc => nc === callObj)
       next.eventQueue.push(callObj.fn)
     }),
     AddToEventQueue: produceUpdate((prev, next, fn) => {

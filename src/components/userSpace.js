@@ -33,7 +33,7 @@ export default () => ({
       }, 'Sym Net Call'),
       m(Button, {
         class: blueButtonClass,
-        onclick: () => actions.AddToEventQueue(SampleFunctions.timeoutCall(1200, 'netCall')),
+        onclick: () => actions.AddToEventQueue(SampleFunctions.timeoutCall(1200, 'oneCalls')),
       }, 'Sym Timeout'),
     ),
   ),
