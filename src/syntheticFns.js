@@ -1,20 +1,20 @@
 export const SyntheticFnLineType = {
   RUN_CODE: 'runcode',
-  FN_CALL: SyntheticFnLineType.FN_CALL,
+  FN_CALL: 'fnCall',
   NET_CALL: 'netCall',
   TIMEOUT_CALL: 'timeoutCall',
 }
 
 export const SampleFunctions = {
-  noCalls: {
+  noCalls: () => ({
     lines: [
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.RUN_CODE },
     ],
-  },
-  oneCalls: {
+  }),
+  oneCalls: () => ({
     lines: [
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.RUN_CODE },
@@ -23,8 +23,8 @@ export const SampleFunctions = {
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.RUN_CODE },
     ],
-  },
-  twoCalls: {
+  }),
+  twoCalls: () => ({
     lines: [
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.RUN_CODE },
@@ -36,8 +36,8 @@ export const SampleFunctions = {
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.RUN_CODE },
     ],
-  },
-  netCall: {
+  }),
+  netCall: () => ({
     lines: [
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.NET_CALL, fn: 'twoCalls' },
@@ -46,8 +46,8 @@ export const SampleFunctions = {
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.RUN_CODE },
     ],
-  },
-  timeoutCall: {
+  }),
+  timeoutCall: () => ({
     lines: [
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.TIMEOUT_CALL, fn: 'oneCall' },
@@ -57,5 +57,5 @@ export const SampleFunctions = {
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.RUN_CODE },
     ],
-  }
+  }),
 }

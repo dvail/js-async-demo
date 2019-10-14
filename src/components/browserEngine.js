@@ -12,7 +12,7 @@ export default ({ attrs: { states, actions } }) => ({
   view: () => m(
     BrowserEngine,
     m('h2', 'Browser Engine'),
-    m(AsyncCallList),
-    m(EventQueue),
+    m(AsyncCallList, { states, actions }),
+    m(EventQueue, { states, actions }),
   ),
 })

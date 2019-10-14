@@ -2,10 +2,19 @@ import m from 'mithril'
 
 import { classes } from '../util'
 
-let ThreadContainer = classes` bg-red-200 h-64 w-20 m-2 `
+let ThreadContainer = classes` flex flex-col-reverse bg-red-200 h-64 w-20 m-2 `
+let ThreadStyle = classes` border border-solid border-red-900 text-xs `
 
-export default ({ attrs: { states, actions } }) => ({
-  view: () => m(
+let Thread = () => ({
+  view: ({ attrs: { fn } }) => m(
+    ThreadStyle,
+    JSON.stringify(fn.lines),
+  ),
+})
+
+export default () => ({
+  view: ({ attrs: { model } }) => m(
     ThreadContainer,
+    model.callstack.map(fn => m(Thread, { fn })),
   ),
 })
