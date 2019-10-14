@@ -18,7 +18,10 @@ export default ({ attrs: { states, actions } }) => ({
     m(
       'label',
       'Thread Count:',
-      m('input[type="text"]', { value: 1, onkeyup: e => threadCountChange(e, actions) } ),
+      m('input[type="text"]', {
+        value: states().threads.length,
+        onkeyup: e => threadCountChange(e, actions),
+      }),
     ),
   ),
 })

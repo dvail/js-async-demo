@@ -25,15 +25,15 @@ export default () => ({
       'div',
       m(Button, {
         class: blueButtonClass,
-        onclick: () => actions.SimulateClick(SampleFunctions.twoCalls()),
+        onclick: () => actions.AddToEventQueue(SampleFunctions.twoCalls()),
       }, 'Sym Fn'),
       m(Button, {
         class: blueButtonClass,
-        onclick: () => actions.SimulateClick(SampleFunctions.netCall('oneCalls')),
+        onclick: () => actions.AddToEventQueue(SampleFunctions.netCall('oneCalls')),
       }, 'Sym Net Call'),
       m(Button, {
         class: blueButtonClass,
-        onclick: () => actions.SimulateClick(SampleFunctions.timeoutCall(1200, 'netCall')),
+        onclick: () => actions.AddToEventQueue(SampleFunctions.timeoutCall(1200, 'netCall')),
       }, 'Sym Timeout'),
     ),
   ),

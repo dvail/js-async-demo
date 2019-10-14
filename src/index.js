@@ -34,8 +34,9 @@ window.app = new Proxy({
 
 setInterval(() => {
   let idleThread = states().threads.find(t => !t.callstack.length)
+  let eventQueueEmpty = states().eventQueue.length < 1
 
-  if (idleThread) {
+  if (idleThread && !eventQueueEmpty) {
     actions.TakeFromEventQueue()
   }
 

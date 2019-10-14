@@ -8,8 +8,8 @@ let EventQueueLayout = twComponent('  flex flex-row-reverse ')
 
 let PendingFn = twComponent(' h-20 w-20 bg-blue-900 ')
 
-export default ({ attrs: { states, actions } }) => ({
-  view: () => m(
+export default () => ({
+  view: ({ attrs: { states } }) => m(
     EventQueue,
     m(Heading, 'Event Queue'),
     m(

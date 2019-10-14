@@ -12,7 +12,7 @@ export default () => ({
     JsRuntime,
     m(Heading, 'JS Runtime'),
     m(
-      twComponent(' flex-grow py-2 '),
+      twComponent(' flex flex-row flex-grow py-2 mx-1 '),
       states().threads.map(t => m(Thread, { model: t })),
     ),
   ),
