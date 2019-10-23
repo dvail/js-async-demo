@@ -1,13 +1,16 @@
 
 import m from 'mithril'
 
+import clockIcon from '../../res/timer.svg'
+import networkIcon from '../../res/network.svg'
+import refreshIcon from '../../res/refresh.svg'
 import { twComponent } from '../util'
 
 let AsyncCallListLayout = twComponent(' bg-white ')
 let AsyncCallHeading    = twComponent(' text-lg ')
 let AsyncCallContainer  = twComponent(' flex flex-row ')
-let NetCall             = twComponent(' w-20 h-20 bg-green-700 ')
-let Timeout             = twComponent(' w-20 h-20 bg-orange-500 ')
+let NetCallIcon         = m(twComponent('img', ' w-16 h-16 filter-invert '), { src: networkIcon })
+let TimeoutIcon         = m(twComponent('img', ' w-16 h-16 filter-invert '), { src: clockIcon })
 
 const AsyncCallList = {
   view: ({ attrs: { states } }) => m(
@@ -15,8 +18,14 @@ const AsyncCallList = {
     m(AsyncCallHeading, 'Async Calls'),
     m(
       AsyncCallContainer,
-      states().networkCalls.map(nc => m(NetCall)),
-      states().timeouts.map(to => m(Timeout)),
+      states().networkCalls.map(() => m(
+        twComponent(' p-2 bg-green-400 '),
+        NetCallIcon,
+      )),
+      states().timeouts.map(() => m(
+        twComponent(' p-2 bg-orange-400 '),
+        TimeoutIcon,
+      )),
     ),
   ),
 }

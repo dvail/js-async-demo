@@ -12,6 +12,12 @@ let ThreadStack = () => ({
   oncreate: vnode => {
     window.requestAnimationFrame(() => vnode.dom.classList.add('opacity-100'))
   },
+  onbeforeremove: vnode => {
+    vnode.dom.classList.remove('opacity-100')
+    return new Promise(resolve => {
+      vnode.dom.addEventListener("transitionend", resolve)
+    });
+  },
   view: ({ attrs: { fn } }) => m(
     ThreadStyle,
     fn.lines.map(l => (l.done ? m(DoneLineStyle, l.type) : m(PendingLineStyle, l.type))),
