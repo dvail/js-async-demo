@@ -5,13 +5,13 @@ import { SampleFunctions } from "../syntheticFns"
 
 import Thread from './thread'
 
-let JsRuntimeLayout = twComponent(' flex flex-col bg-white flex-grow ')
-let Heading = twComponent(' text-lg ')
+let JsRuntimeLayout  = twComponent(' flex flex-col bg-white flex-grow ')
+let JsRuntimeHeading = twComponent(' text-lg ')
 
 const JsRuntime = {
   view: ({ attrs: { states } }) => m(
     JsRuntimeLayout,
-    m(Heading, 'JS Runtime'),
+    m(JsRuntimeHeading, 'JS Runtime'),
     m(
       twComponent(' flex flex-row flex-grow py-2 mx-1 '),
       states().threads.map(t => m(Thread, { model: t })),
@@ -19,8 +19,8 @@ const JsRuntime = {
   ),
 }
 
-let UserSpace = twComponent(' flex flex-col flex-grow-3 p-4 bg-blue-100 ')
-let Button = twComponent('button', ` px-10 py-2 `)
+let UserSpace  = twComponent(' flex flex-col flex-grow-3 p-4 bg-blue-100 ')
+let Button     = twComponent('button', ' px-10 py-2 ')
 let BlueButton = twComponent(Button, ' bg-blue-600 text-white ')
 
 export default () => ({

@@ -3,36 +3,35 @@ import m from 'mithril'
 
 import { twComponent } from '../util'
 
-let AsyncCallListStyle = twComponent(' bg-white ')
-let Heading = twComponent(' text-lg ')
-let Container = twComponent(' flex flex-row ')
-let NetCall = twComponent(' w-20 h-20 bg-green-700 ')
-let Timeout = twComponent(' w-20 h-20 bg-orange-500 ')
+let AsyncCallListLayout = twComponent(' bg-white ')
+let AsyncCallHeading    = twComponent(' text-lg ')
+let AsyncCallContainer  = twComponent(' flex flex-row ')
+let NetCall             = twComponent(' w-20 h-20 bg-green-700 ')
+let Timeout             = twComponent(' w-20 h-20 bg-orange-500 ')
 
 const AsyncCallList = {
   view: ({ attrs: { states } }) => m(
-    AsyncCallListStyle,
-    m(Heading, 'Async Calls'),
+    AsyncCallListLayout,
+    m(AsyncCallHeading, 'Async Calls'),
     m(
-      Container,
+      AsyncCallContainer,
       states().networkCalls.map(nc => m(NetCall)),
       states().timeouts.map(to => m(Timeout)),
     ),
   ),
 }
 
-let EventQueueStyle = twComponent(' bg-white ')
+let EventQueueLayout  = twComponent(' bg-white ')
 let EventQueueHeading = twComponent(' text-lg ')
-let EventQueueLayout = twComponent('  flex flex-row-reverse ')
-
-let PendingFn = twComponent(' h-20 w-20 bg-blue-900 ')
+let EventQueueWrapper = twComponent(' flex flex-row-reverse ')
+let PendingFn         = twComponent(' h-20 w-20 bg-blue-900 ')
 
 const EventQueue = {
   view: ({ attrs: { states } }) => m(
-    EventQueueStyle,
+    EventQueueLayout,
     m(EventQueueHeading, 'Event Queue'),
     m(
-      EventQueueLayout,
+      EventQueueWrapper,
       states().eventQueue.map(fn => m(PendingFn)),
     ),
   ),
