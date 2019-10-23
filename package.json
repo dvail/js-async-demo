@@ -1,5 +1,5 @@
 {
-  "name": "js-thread-model",
+  "name": "js-async-demo",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -49,6 +49,7 @@
     "lodash": "^4.17.14",
     "mithril": "^2.0.3",
     "tailwindcss": "^1.1.2",
+    "tailwindcss-transitions": "^2.1.0",
     "uuid": "^3.3.3"
   }
 }

@@ -5,16 +5,16 @@ import { twComponent } from '../util'
 function threadCountChange(e, actions) {
   let newCount = parseInt(e.target.value, 10);
 
-  if (isNaN(newCount)) return;
-  if (newCount > 4)    return;
-  if (newCount < 1)    return;
+  if (Number.isNaN(newCount)) return;
+  if (newCount > 4)           return;
+  if (newCount < 1)           return;
 
   actions.SetThreadCount(newCount);
 }
 
 export default ({ attrs: { states, actions } }) => ({
   view: () => m(
-    'div', 
+    'div',
     m(
       'label',
       'Thread Count:',
