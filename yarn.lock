@@ -6810,6 +6810,12 @@ table@^5.2.3:
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
 
+tailwindcss-animations@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/tailwindcss-animations/-/tailwindcss-animations-1.0.0.tgz#45c99b6914f2a69744e51d4cdc55f2d9691dec14"
+  dependencies:
+    lodash "^4.17.15"
+
 tailwindcss-transitions@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/tailwindcss-transitions/-/tailwindcss-transitions-2.1.0.tgz#54ca6c293a197300c5eb1ab3775dc29f083432f1"

@@ -1,3 +1,6 @@
+let tailwindTransitions = require('tailwindcss-transitions')()
+let tailwindAnimations = require('tailwindcss-animations')()
+
 module.exports = {
   theme: {
     extend: {},
@@ -7,10 +10,21 @@ module.exports = {
       '1': 1,
       '2': 2,
       '3': 3,
-    }
+    },
+    animations: {
+      pulse: {
+        from: {
+          transform: 'scale(1)',
+        },
+        to: {
+          transform: 'scale(0.9)',
+        },
+      },
+    },
   },
   variants: {},
   plugins: [
-    require('tailwindcss-transitions')(),
+    tailwindTransitions,
+    tailwindAnimations,
   ],
 }

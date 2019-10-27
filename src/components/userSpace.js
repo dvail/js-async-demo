@@ -2,19 +2,44 @@ import m from 'mithril'
 
 import { twComponent } from '../util'
 import { SampleFunctions } from "../syntheticFns"
+import cpuIcon from '../../res/cpu.svg'
 
 import Thread from './thread'
 
 let JsRuntimeLayout  = twComponent(' flex flex-col bg-white flex-grow ')
 let JsRuntimeHeading = twComponent(' text-lg ')
+let CpuWrapper = twComponent(' w-20 h-20 mx-2 p-2 ')
+let CpuIcon = {
+  view: ({ attrs: { states } }) => m(
+    twComponent('img', ' w-full h-full animation-pulse '),
+    {
+      src: cpuIcon,
+      style: { animationDuration: `${states().clockSpeed / 1000}s` },
+    },
+  ),
+}
 
-const JsRuntime = {
+let CpuCell = {
+  view: ({ attrs: { states, model } }) => {
+    let threadCpu = states().cpus.find(c => c.thread === model)
+    return m(
+      CpuWrapper,
+      threadCpu && m(CpuIcon, { states }),
+    )
+  },
+}
+
+let JsRuntime = {
   view: ({ attrs: { states } }) => m(
     JsRuntimeLayout,
     m(JsRuntimeHeading, 'JS Runtime'),
     m(
       twComponent(' flex flex-row flex-grow py-2 mx-1 '),
-      states().threads.map(t => m(Thread, { model: t })),
+      m(
+        twComponent(' flex flex-col '),
+        states().threads.map(t => m(Thread, { model: t })),
+        states().threads.map(t => m(CpuCell, { states, model: t })),
+      ),
     ),
   ),
 }

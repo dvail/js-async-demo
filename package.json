@@ -50,6 +50,7 @@
     "mithril": "^2.0.3",
     "svg-url-loader": "^3.0.2",
     "tailwindcss": "^1.1.2",
+    "tailwindcss-animations": "^1.0.0",
     "tailwindcss-transitions": "^2.1.0",
     "uuid": "^3.3.3"
   }

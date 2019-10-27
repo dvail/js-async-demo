@@ -11,6 +11,10 @@ export function ThreadModel(fn) {
   }
 }
 
+export function CpuModel(thread, activeTime) {
+  return { thread, activeTime }
+}
+
 export default function initMeiosis(initialState = {}) {
   let update = stream()
   let stateUpdate = (appState, fn) => fn(appState)

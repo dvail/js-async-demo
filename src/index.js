@@ -1,6 +1,7 @@
+import _ from 'lodash'
 import m from 'mithril'
 
-import initMeiosis, { ThreadModel } from './appState';
+import initMeiosis, { ThreadModel, CpuModel } from './appState';
 import Root from './components/root'
 
 import './index.css'
@@ -12,7 +13,7 @@ const initialState = {
     ThreadModel(),
   ],
   cpus: [
-    {},
+    CpuModel(),
   ],
   eventQueue: [],
   networkCalls: [],
@@ -46,6 +47,27 @@ function clockTick() {
 }
 
 clockTick()
+
+let cpuPreemptRate = 2000
+setInterval(() => {
+  let cpusReadyToSwitch = states().cpus.filter(cpu => {
+    return !cpu.thread
+        || !cpu.thread.callstack.length
+        || ((Date.now() - cpu.activeTime) > cpuPreemptRate)
+  })
+  let currentActiveThreads = states().cpus.map(c => c.thread && c.thread.callstack.length)
+
+  let waitingThreads = states().threads
+    |> (threads => _.filter(threads, t => !currentActiveThreads.includes(t)))
+    |> (threads => _.filter(threads, t => t.callstack.length))
+    |> _.shuffle
+
+  cpusReadyToSwitch.forEach(cpu => {
+  })
+
+  console.warn(cpusReadyToSwitch)
+  console.warn(waitingThreads)
+}, 100)
 
 const mRoot = document.querySelector('.app')
 
