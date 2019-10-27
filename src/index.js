@@ -7,6 +7,7 @@ import './index.css'
 
 const initialState = {
   clockSpeed: 300,
+  timeoutDelay: 1200,
   threads: [
     ThreadModel(),
   ],

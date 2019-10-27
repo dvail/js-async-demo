@@ -48,6 +48,9 @@ export const SampleFunctions = {
       { type: SyntheticFnLineType.NET_CALL, fn },
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.RUN_CODE },
+      { type: SyntheticFnLineType.RUN_CODE },
+      { type: SyntheticFnLineType.RUN_CODE },
+      { type: SyntheticFnLineType.RUN_CODE },
     ],
   }),
   timeoutCall: (delay, fn) => ({

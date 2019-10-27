@@ -59,6 +59,9 @@ export default function initMeiosis(initialState = {}) {
     SetClockSpeed: produceUpdate((prev, next, speed) => {
       next.clockSpeed = speed
     }),
+    SetTimeoutDelay: produceUpdate((prev, next, delay) => {
+      next.timeoutDelay = delay
+    }),
     SetThreadCount: produceUpdate((prev, next, count) => {
       while (next.threads.length > count) {
         next.threads.shift()

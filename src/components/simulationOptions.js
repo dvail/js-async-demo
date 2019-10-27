@@ -13,12 +13,21 @@ function threadCountChange(e, actions) {
 }
 
 function clockSpeedChange(e, actions) {
-  let newCount = parseInt(e.target.value, 10);
+  let newSpeed = parseInt(e.target.value, 10);
 
-  if (Number.isNaN(newCount)) return;
-  if (newCount < 1)           return;
+  if (Number.isNaN(newSpeed)) return;
+  if (newSpeed < 1)           return;
 
-  actions.SetClockSpeed(newCount);
+  actions.SetClockSpeed(newSpeed);
+}
+
+function timeoutDelayChange(e, actions) {
+  let newDelay = parseInt(e.target.value, 10);
+
+  if (Number.isNaN(newDelay)) return;
+  if (newDelay < 0)           return;
+
+  actions.SetTimeoutDelay(newDelay);
 }
 
 export default ({ attrs: { states, actions } }) => ({
@@ -39,6 +48,14 @@ export default ({ attrs: { states, actions } }) => ({
         value: states().clockSpeed,
         onkeyup: e => clockSpeedChange(e, actions),
       }),
-    )
+    ),
+    m(
+      'label',
+      'Timeout Delay:',
+      m('input[type="text"]', {
+        value: states().timeoutDelay,
+        onkeyup: e => timeoutDelayChange(e, actions),
+      }),
+    ),
   ),
 })

@@ -35,7 +35,7 @@ export default () => ({
       'div',
       m(BlueButton, { onclick: () => actions.AddToEventQueue(SampleFunctions.twoCalls()) }, 'Sym Fn'),
       m(BlueButton, { onclick: () => actions.AddToEventQueue(SampleFunctions.netCall('oneCalls')) }, 'Sym Net Call'),
-      m(BlueButton, { onclick: () => actions.AddToEventQueue(SampleFunctions.timeoutCall(1200, 'oneCalls')) }, 'Sym Timeout'),
+      m(BlueButton, { onclick: () => actions.AddToEventQueue(SampleFunctions.timeoutCall(states().timeoutDelay, 'oneCalls')) }, 'Sym Timeout'),
     ),
   ),
 })
