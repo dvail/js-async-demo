@@ -7,12 +7,17 @@ import { SampleFunctions } from './syntheticFns'
 
 export function ThreadModel(fn) {
   return {
+    id: _.uniqueId('thread-'),
     callstack: fn ? [fn] : [],
   }
 }
 
 export function CpuModel(thread, activeTime) {
-  return { thread, activeTime }
+  return {
+    id: _.uniqueId('cpu-'),
+    thread,
+    activeTime,
+  }
 }
 
 export default function initMeiosis(initialState = {}) {
@@ -101,23 +106,41 @@ export default function initMeiosis(initialState = {}) {
       next.cpus.push({})
     }),
     ProcessThreads: produceUpdate((prev, next) => {
-      next.threads.forEach(thread => {
-        let topOfStack = _.last(thread.callstack, null)
+      let activeThreadIds = next.cpus.map(c => c.thread?.id)
+      next.threads
+        .filter(t => activeThreadIds.includes(t.id))
+        .forEach(thread => {
+          let topOfStack = _.last(thread.callstack, null)
 
-        if (!topOfStack) return
+          if (!topOfStack) return
 
-        let nextLine = topOfStack.lines.find(l => !l.done)
+          let nextLine = topOfStack.lines.find(l => !l.done)
 
-        if (!nextLine) {
-          thread.callstack.pop()
-          return
+          if (!nextLine) {
+            thread.callstack.pop()
+            return
+          }
+
+          execLine(next, nextLine, thread)
+          nextLine.done = true
+        })
+
+      next.cpus.forEach(cpu => {
+        if (
+          cpu.thread ?.callstack
+            .flatMap(cs => cs.lines)
+            .every(l => l.done)
+        ) {
+          cpu.thread = null
         }
-
-        execLine(next, nextLine, thread)
-        nextLine.done = true
       })
     }),
-
+    ChangeCpuThread: produceUpdate((prev, next, { cpu, thread }) => {
+      let nextCpu = next.cpus.find(c => c.id === cpu.id)
+      let nextThread = next.threads.find(t => t.id === thread.id)
+      nextCpu.thread = nextThread
+      nextCpu.activeTime = Date.now()
+    }),
   }
 
   return {

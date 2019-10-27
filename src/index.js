@@ -48,25 +48,26 @@ function clockTick() {
 
 clockTick()
 
-let cpuPreemptRate = 2000
 setInterval(() => {
   let cpusReadyToSwitch = states().cpus.filter(cpu => {
     return !cpu.thread
         || !cpu.thread.callstack.length
-        || ((Date.now() - cpu.activeTime) > cpuPreemptRate)
+        || ((Date.now() - cpu.activeTime) > (5 * states().clockSpeed))
   })
   let currentActiveThreads = states().cpus.map(c => c.thread && c.thread.callstack.length)
 
-  let waitingThreads = states().threads
-    |> (threads => _.filter(threads, t => !currentActiveThreads.includes(t)))
-    |> (threads => _.filter(threads, t => t.callstack.length))
-    |> _.shuffle
+  let threadsWaiting = states().threads
+    |> _.filter(?, t => !currentActiveThreads.includes(t))
+    |> _.filter(?, t => t.callstack.length)
+    |> _.shuffle // shuffle ensures threads do not get starved
 
   cpusReadyToSwitch.forEach(cpu => {
+    let candidateThread = threadsWaiting.find(t => cpu.t !== t)
+    if (candidateThread) {
+      actions.ChangeCpuThread({ cpu, thread: candidateThread })
+      threadsWaiting = threadsWaiting.filter(t => t !== candidateThread)
+    }
   })
-
-  console.warn(cpusReadyToSwitch)
-  console.warn(waitingThreads)
 }, 100)
 
 const mRoot = document.querySelector('.app')

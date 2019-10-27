@@ -21,7 +21,7 @@ let CpuIcon = {
 
 let CpuCell = {
   view: ({ attrs: { states, model } }) => {
-    let threadCpu = states().cpus.find(c => c.thread === model)
+    let threadCpu = states().cpus.find(c => c.thread?.id === model.id)
     return m(
       CpuWrapper,
       threadCpu && m(CpuIcon, { states }),
@@ -35,11 +35,11 @@ let JsRuntime = {
     m(JsRuntimeHeading, 'JS Runtime'),
     m(
       twComponent(' flex flex-row flex-grow py-2 mx-1 '),
-      m(
+      states().threads.map(t => m(
         twComponent(' flex flex-col '),
-        states().threads.map(t => m(Thread, { model: t })),
-        states().threads.map(t => m(CpuCell, { states, model: t })),
-      ),
+        m(Thread, { model: t }),
+        m(CpuCell, { states, model: t }),
+      )),
     ),
   ),
 }
