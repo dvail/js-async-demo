@@ -80,6 +80,15 @@ export default function initMeiosis(initialState = {}) {
         next.threads.push(ThreadModel())
       }
     }),
+    SetCpuCount: produceUpdate((prev, next, count) => {
+      while (next.cpus.length > count) {
+        next.cpus.shift()
+      }
+
+      while (next.cpus.length < count) {
+        next.cpus.push(CpuModel())
+      }
+    }),
     TakeFromEventQueue: produceUpdate((prev, next) => {
       let nextFn = next.eventQueue.shift()
       let idleThreadIndex = next.threads.findIndex(t => !t.callstack.length)

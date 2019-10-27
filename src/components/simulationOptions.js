@@ -2,6 +2,16 @@ import m from 'mithril'
 
 import { twComponent } from '../util'
 
+function cpuCountChange(e, actions) {
+  let newCount = parseInt(e.target.value, 10);
+
+  if (Number.isNaN(newCount)) return;
+  if (newCount > 4)           return;
+  if (newCount < 1)           return;
+
+  actions.SetCpuCount(newCount);
+}
+
 function threadCountChange(e, actions) {
   let newCount = parseInt(e.target.value, 10);
 
@@ -40,6 +50,10 @@ export default ({ attrs: { states, actions } }) => ({
     LabelTextInput('Thread Count:', {
       value: states().threads.length,
       onkeyup: e => threadCountChange(e, actions),
+    }),
+    LabelTextInput('CPU Count:', {
+      value: states().cpus.length,
+      onkeyup: e => cpuCountChange(e, actions),
     }),
     LabelTextInput('Clock Speed:', {
       value: states().clockSpeed,
