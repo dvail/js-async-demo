@@ -30,32 +30,24 @@ function timeoutDelayChange(e, actions) {
   actions.SetTimeoutDelay(newDelay);
 }
 
+function LabeledTextInput(text, inputAttrs) {
+  return m('label', text, m('input[type="text"]', inputAttrs))
+}
+
 export default ({ attrs: { states, actions } }) => ({
   view: () => m(
     'div',
-    m(
-      'label',
-      'Thread Count:',
-      m('input[type="text"]', {
-        value: states().threads.length,
-        onkeyup: e => threadCountChange(e, actions),
-      }),
-    ),
-    m(
-      'label',
-      'Clock Speed:',
-      m('input[type="text"]', {
-        value: states().clockSpeed,
-        onkeyup: e => clockSpeedChange(e, actions),
-      }),
-    ),
-    m(
-      'label',
-      'Timeout Delay:',
-      m('input[type="text"]', {
-        value: states().timeoutDelay,
-        onkeyup: e => timeoutDelayChange(e, actions),
-      }),
-    ),
+    LabeledTextInput('Thread Count:', {
+      value: states().threads.length,
+      onkeyup: e => threadCountChange(e, actions),
+    }),
+    LabeledTextInput('Clock Speed:', {
+      value: states().clockSpeed,
+      onkeyup: e => clockSpeedChange(e, actions),
+    }),
+    LabeledTextInput('Timeout Delay:', {
+      value: states().timeoutDelay,
+      onkeyup: e => timeoutDelayChange(e, actions),
+    }),
   ),
 })
