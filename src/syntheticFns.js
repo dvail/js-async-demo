@@ -7,6 +7,7 @@ export const SyntheticFnLineType = {
 
 export const SampleFunctions = {
   noCalls: () => ({
+    type: 'onclick',
     lines: [
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.RUN_CODE },
@@ -15,6 +16,7 @@ export const SampleFunctions = {
     ],
   }),
   oneCalls: () => ({
+    type: 'onclick',
     lines: [
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.RUN_CODE },
@@ -25,6 +27,7 @@ export const SampleFunctions = {
     ],
   }),
   twoCalls: () => ({
+    type: 'onclick',
     lines: [
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.RUN_CODE },
@@ -38,6 +41,7 @@ export const SampleFunctions = {
     ],
   }),
   netCall: fn => ({
+    type: 'onclick',
     lines: [
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.RUN_CODE },
@@ -47,6 +51,7 @@ export const SampleFunctions = {
     ],
   }),
   timeoutCall: (delay, fn) => ({
+    type: 'onclick',
     lines: [
       { type: SyntheticFnLineType.RUN_CODE },
       { type: SyntheticFnLineType.TIMEOUT_CALL, fn, delay },

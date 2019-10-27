@@ -1,5 +1,5 @@
-
 import m from 'mithril'
+import { multi, method } from '@arrows/multimethod'
 
 import clockIcon from '../../res/timer.svg'
 import networkIcon from '../../res/network.svg'
@@ -33,7 +33,22 @@ const AsyncCallList = {
 let EventQueueLayout  = twComponent(' bg-white ')
 let EventQueueHeading = twComponent(' text-lg ')
 let EventQueueWrapper = twComponent(' flex flex-row-reverse ')
-let PendingFn         = twComponent(' h-20 w-20 bg-blue-900 ')
+let PendingFnWrapper  = twComponent(' h-20 w-20 ')
+
+const colorByType = multi(
+  ({ type }) => type,
+  method('onclick',          () => 'bg-blue-400'),
+  method('net callback',     () => 'bg-green-400'),
+  method('timeout callback', () => 'bg-orange-400'),
+)
+
+function PendingFn(fn) {
+  let color = colorByType(fn)
+  return m(
+    twComponent(PendingFnWrapper, color),
+    m('.text-white', fn.type),
+  )
+}
 
 const EventQueue = {
   view: ({ attrs: { states } }) => m(
@@ -41,7 +56,7 @@ const EventQueue = {
     m(EventQueueHeading, 'Event Queue'),
     m(
       EventQueueWrapper,
-      states().eventQueue.map(fn => m(PendingFn)),
+      states().eventQueue.map(PendingFn),
     ),
   ),
 }

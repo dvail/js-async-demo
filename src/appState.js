@@ -1,4 +1,3 @@
-import m from 'mithril'
 import stream from 'mithril/stream'
 import produce from 'immer'
 import _ from 'lodash'
@@ -70,7 +69,7 @@ export default function initMeiosis(initialState = {}) {
       }
     }),
     TakeFromEventQueue: produceUpdate((prev, next) => {
-      let nextFn = next.eventQueue.pop()
+      let nextFn = next.eventQueue.shift()
       let idleThreadIndex = next.threads.findIndex(t => !t.callstack.length)
 
       if (nextFn) {
@@ -79,11 +78,11 @@ export default function initMeiosis(initialState = {}) {
     }),
     NetworkCallResolved: produceUpdate((prev, next, callObj) => {
       next.networkCalls = next.networkCalls.filter(nc => nc === callObj)
-      next.eventQueue.push(callObj.fn)
+      next.eventQueue.push({ ...callObj.fn, type: 'net callback' })
     }),
     TimeoutResolved: produceUpdate((prev, next, callObj) => {
       next.timeouts = next.timeouts.filter(nc => nc === callObj)
-      next.eventQueue.push(callObj.fn)
+      next.eventQueue.push({ ...callObj.fn, type: 'timeout callback' })
     }),
     AddToEventQueue: produceUpdate((prev, next, fn) => {
       next.eventQueue.push(fn)
