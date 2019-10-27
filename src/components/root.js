@@ -13,7 +13,7 @@ export default () => ({
     AppLayout,
     m(
       SimulationLayout,
-      m(BrowserEngine, { states, actions }),
+      states().showBrowserEngine && m(BrowserEngine, { states, actions }),
       m(UserSpace, { states, actions }),
     ),
     m(SimulationOptions, { states, actions }),

@@ -65,6 +65,9 @@ export default function initMeiosis(initialState = {}) {
   )
 
   actions = {
+    SetShowBrowserEngine: produceUpdate((prev, next, show) => {
+      next.showBrowserEngine = show
+    }),
     SetClockSpeed: produceUpdate((prev, next, speed) => {
       next.clockSpeed = speed
     }),

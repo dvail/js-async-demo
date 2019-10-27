@@ -7,6 +7,7 @@ import Root from './components/root'
 import './index.css'
 
 const initialState = {
+  showBrowserEngine: false,
   clockSpeed: 300,
   timeoutDelay: 1200,
   threads: [
@@ -66,6 +67,7 @@ setInterval(() => {
     if (candidateThread) {
       actions.ChangeCpuThread({ cpu, thread: candidateThread })
       threadsWaiting = threadsWaiting.filter(t => t !== candidateThread)
+      m.redraw()
     }
   })
 }, 100)
