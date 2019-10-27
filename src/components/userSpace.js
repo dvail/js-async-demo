@@ -61,7 +61,6 @@ let CpuBank = {
 export default () => ({
   view: ({ attrs: { states, actions } }) => m(
     UserSpace,
-    m('h2', 'User Space'),
     m(
       twComponent(' flex flex-row flex-grow '),
       m(CpuBank, { states }),

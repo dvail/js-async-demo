@@ -3,7 +3,7 @@ import m from 'mithril'
 import { twComponent } from '../util'
 
 let ThreadContainer  = twComponent(' flex flex-col-reverse bg-red-200 h-full w-20 mx-2 ')
-let ThreadStyle      = twComponent(' border border-solid border-red-900 text-xs transition-opacity transition-ease opacity-0 ')
+let ThreadStyle      = twComponent(' border border-solid border-red-900 text-xs transition-opacity opacity-0 ')
 let LineStyle        = twComponent(' m-1 rounded text-white ')
 let DoneLineStyle    = twComponent(LineStyle, ' bg-blue-900 font-bold ')
 let PendingLineStyle = twComponent(LineStyle, ' bg-gray-500 ')

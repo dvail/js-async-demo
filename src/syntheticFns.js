@@ -1,5 +1,5 @@
 export const SyntheticFnLineType = {
-  RUN_CODE: 'runcode',
+  RUN_CODE: 'code',
   FN_CALL: 'fnCall',
   NET_CALL: 'netCall',
   TIMEOUT_CALL: 'timeoutCall',

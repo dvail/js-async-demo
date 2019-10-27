@@ -30,17 +30,14 @@ const AsyncCallList = {
   ),
 }
 
-let EventQueueLayout  = twComponent(' bg-white ')
-let EventQueueHeading = twComponent(' text-lg ')
-let EventQueueWrapper = twComponent(' flex flex-row-reverse ')
-let PendingFnWrapper  = twComponent(' h-20 w-20 ')
-
 const colorByType = multi(
   ({ type }) => type,
   method('onclick',          () => 'bg-blue-400'),
   method('net callback',     () => 'bg-green-400'),
   method('timeout callback', () => 'bg-orange-400'),
 )
+
+let PendingFnWrapper  = twComponent(' h-20 w-20 ')
 
 function PendingFn(fn) {
   let color = colorByType(fn)
@@ -50,12 +47,45 @@ function PendingFn(fn) {
   )
 }
 
-const EventQueue = {
+let EventQueueLayout  = twComponent(' bg-white ')
+let EventQueueHeading = twComponent(' text-lg ')
+let EventQueueWrapper = twComponent(' flex flex-row-reverse ')
+
+function NextEventIcon({ attrs: { states } }) {
+  let transitionClasses = [
+    'rotate-180',
+    'transition-transform',
+    'transition-500',
+  ]
+  let queueLength = states().eventQueue.length
+  return {
+    oncreate: vnode => {
+      vnode.dom.addEventListener("transitionend", () => {
+        vnode.dom.classList.remove(...transitionClasses)
+      })
+    },
+    onupdate: (vnode) => {
+      let nextQueueLength = vnode.attrs.states().eventQueue.length
+
+      if (nextQueueLength < queueLength) {
+        vnode.dom.classList.add(...transitionClasses)
+      }
+      queueLength = nextQueueLength
+    },
+    view: ({ attrs: { states } }) => m(
+      twComponent('img', ' w-16 h-16 filter-invert-50 '),
+      { src: refreshIcon },
+    ),
+  }
+}
+
+let EventQueue = {
   view: ({ attrs: { states } }) => m(
     EventQueueLayout,
     m(EventQueueHeading, 'Event Queue'),
     m(
       EventQueueWrapper,
+      m(NextEventIcon, { states }),
       states().eventQueue.map(PendingFn),
     ),
   ),

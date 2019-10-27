@@ -37,7 +37,7 @@ export default function initMeiosis(initialState = {}) {
   const execLine = multi(
     (nextState, { type }) => type,
 
-    method('runcode', () => {}),
+    method('code', () => {}),
 
     method('fnCall', (nextState, line, thread) => {
       thread.callstack.push(SampleFunctions[line.fn]())
@@ -49,7 +49,7 @@ export default function initMeiosis(initialState = {}) {
 
       setTimeout(() => {
         actions.NetworkCallResolved(callObj)
-      }, 1500)
+      }, 8 * states().clockSpeed)
     }),
 
     method('timeoutCall', (nextState, line) => {
