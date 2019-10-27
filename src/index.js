@@ -49,15 +49,18 @@ function clockTick() {
 
 clockTick()
 
+// Handles multiprocessing and CPU switching
 setInterval(() => {
-  let cpusReadyToSwitch = states().cpus.filter(cpu => {
-    return !cpu.thread
-        || !cpu.thread.callstack.length
-        || ((Date.now() - cpu.activeTime) > (5 * states().clockSpeed))
+  let { cpus, threads, clockSpeed } = states()
+  let cpusReadyToSwitch = cpus.filter(cpu => {
+    let thread = threads.find(t => t.id === cpu.thread)
+    return !thread
+        || !thread.callstack.length
+        || ((Date.now() - cpu.activeTime) > (5 * clockSpeed))
   })
-  let currentActiveThreads = states().cpus.map(c => c.thread && c.thread.callstack.length)
-
-  let threadsWaiting = states().threads
+  let cpuThreadIds = cpus.map(cpu => cpu.thread)
+  let currentActiveThreads = threads.filter(t => cpuThreadIds.includes(t.id))
+  let threadsWaiting = threads
     |> _.filter(?, t => !currentActiveThreads.includes(t))
     |> _.filter(?, t => t.callstack.length)
     |> _.shuffle // shuffle ensures threads do not get starved
@@ -66,7 +69,7 @@ setInterval(() => {
     let candidateThread = threadsWaiting.find(t => cpu.t !== t)
     if (candidateThread) {
       actions.ChangeCpuThread({ cpu, thread: candidateThread })
-      threadsWaiting = threadsWaiting.filter(t => t !== candidateThread)
+      threadsWaiting = threadsWaiting.filter(t => t.id !== candidateThread.id)
       m.redraw()
     }
   })

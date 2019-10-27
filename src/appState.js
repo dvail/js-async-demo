@@ -37,9 +37,7 @@ export default function initMeiosis(initialState = {}) {
   const execLine = multi(
     (nextState, { type }) => type,
 
-    method('runcode', () => {
-      // TODO log to virtual console
-    }),
+    method('runcode', () => {}),
 
     method('fnCall', (nextState, line, thread) => {
       thread.callstack.push(SampleFunctions[line.fn]())
@@ -118,7 +116,7 @@ export default function initMeiosis(initialState = {}) {
       next.cpus.push({})
     }),
     ProcessThreads: produceUpdate((prev, next) => {
-      let activeThreadIds = next.cpus.map(c => c.thread?.id)
+      let activeThreadIds = next.cpus.map(c => c.thread)
       next.threads
         .filter(t => activeThreadIds.includes(t.id))
         .forEach(thread => {
@@ -137,20 +135,19 @@ export default function initMeiosis(initialState = {}) {
           nextLine.done = true
         })
 
-      next.cpus.forEach(cpu => {
-        if (
-          cpu.thread ?.callstack
-            .flatMap(cs => cs.lines)
-            .every(l => l.done)
-        ) {
+      next.cpus
+        .filter(cpu => {
+          let thread = next.threads.find(t => t.id === cpu.thread)
+          return !thread?.callstack.length
+        })
+        .forEach(cpu => {
           cpu.thread = null
-        }
-      })
+        })
     }),
     ChangeCpuThread: produceUpdate((prev, next, { cpu, thread }) => {
       let nextCpu = next.cpus.find(c => c.id === cpu.id)
       let nextThread = next.threads.find(t => t.id === thread.id)
-      nextCpu.thread = nextThread
+      nextCpu.thread = nextThread.id
       nextCpu.activeTime = Date.now()
     }),
   }
