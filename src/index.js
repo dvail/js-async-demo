@@ -5,9 +5,8 @@ import Root from './components/root'
 
 import './index.css'
 
-const mRoot = document.querySelector('.app')
-
 const initialState = {
+  clockSpeed: 300,
   threads: [
     ThreadModel(),
   ],
@@ -32,7 +31,7 @@ window.app = new Proxy({
   },
 })
 
-setInterval(() => {
+function clockTick() {
   let idleThread = states().threads.find(t => !t.callstack.length)
   let eventQueueEmpty = states().eventQueue.length < 1
 
@@ -42,6 +41,11 @@ setInterval(() => {
 
   actions.ProcessThreads()
   m.redraw()
-}, 300)
+  setTimeout(clockTick, states().clockSpeed)
+}
+
+clockTick()
+
+const mRoot = document.querySelector('.app')
 
 m.mount(mRoot, { view: () => m(Root, { states, actions }) });

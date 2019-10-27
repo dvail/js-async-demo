@@ -12,6 +12,15 @@ function threadCountChange(e, actions) {
   actions.SetThreadCount(newCount);
 }
 
+function clockSpeedChange(e, actions) {
+  let newCount = parseInt(e.target.value, 10);
+
+  if (Number.isNaN(newCount)) return;
+  if (newCount < 1)           return;
+
+  actions.SetClockSpeed(newCount);
+}
+
 export default ({ attrs: { states, actions } }) => ({
   view: () => m(
     'div',
@@ -23,5 +32,13 @@ export default ({ attrs: { states, actions } }) => ({
         onkeyup: e => threadCountChange(e, actions),
       }),
     ),
+    m(
+      'label',
+      'Clock Speed:',
+      m('input[type="text"]', {
+        value: states().clockSpeed,
+        onkeyup: e => clockSpeedChange(e, actions),
+      }),
+    )
   ),
 })
