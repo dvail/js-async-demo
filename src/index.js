@@ -8,7 +8,7 @@ import './index.css'
 
 const initialState = {
   showBrowserEngine: true,
-  clockSpeed: 300,
+  clockSpeed: 250,
   timeoutDelay: 1200,
   threads: [
     ThreadModel(),

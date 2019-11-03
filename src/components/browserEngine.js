@@ -57,8 +57,7 @@ let PendingFnWrapper  = twComponent(`
   animation-expand-up animation-once animation-200ms transform-b
 `)
 
-let PendingFn = ({ attrs: { fn } }) => {
-  let { bg, text } = colorByType(fn)
+let PendingFn = () => {
   return {
     onbeforeremove: vnode => {
       vnode.dom.classList.remove('opacity-100')
@@ -66,13 +65,16 @@ let PendingFn = ({ attrs: { fn } }) => {
         vnode.dom.addEventListener("transitionend", resolve)
       });
     },
-    view: () => m(
-      twComponent(PendingFnWrapper, bg),
-      m(
-        twComponent(` px-1 bg-white text-sm font-bold ${text} truncate `),
-        fn.type,
-      ),
-    ),
+    view: ({ attrs: { fn } }) => {
+      let { bg, text } = colorByType(fn)
+      return m(
+        twComponent(PendingFnWrapper, bg),
+        m(
+          twComponent(` px-1 bg-white text-sm font-bold ${text} truncate `),
+          fn.type,
+        ),
+      )
+    },
   }
 }
 
