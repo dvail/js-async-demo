@@ -9,6 +9,7 @@ export function ThreadModel(fn) {
   return {
     id: _.uniqueId('thread-'),
     callstack: fn ? [fn] : [],
+    callOriginator: fn ? fn.type : undefined,
   }
 }
 
@@ -100,11 +101,11 @@ export default function initMeiosis(initialState = {}) {
     }),
     NetworkCallResolved: produceUpdate((prev, next, callObj) => {
       next.networkCalls = next.networkCalls.filter(nc => nc === callObj)
-      next.eventQueue.push({ ...callObj.fn, type: 'net callback' })
+      next.eventQueue.push({ ...callObj.fn, type: 'networkCallback' })
     }),
     TimeoutResolved: produceUpdate((prev, next, callObj) => {
       next.timeouts = next.timeouts.filter(nc => nc === callObj)
-      next.eventQueue.push({ ...callObj.fn, type: 'timeout callback' })
+      next.eventQueue.push({ ...callObj.fn, type: 'timeoutCallback' })
     }),
     AddToEventQueue: produceUpdate((prev, next, fn) => {
       next.eventQueue.push(fn)

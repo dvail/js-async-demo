@@ -6,7 +6,7 @@ import UserSpace from './userSpace'
 import SimulationOptions from './simulationOptions'
 
 let AppLayout = twComponent(' h-full flex flex-col bg-orange-100 ')
-let SimulationLayout = twComponent(' h-full flex flex-row bg-orange-200 ')
+let SimulationLayout = twComponent(' h-full flex flex-row bg-orange-100 ')
 
 export default () => ({
   view: ({ attrs: { states, actions } }) => m(

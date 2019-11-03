@@ -45,9 +45,8 @@ let JsRuntime = {
   ),
 }
 
-let UserSpace  = twComponent(' flex flex-col flex-grow-3 p-4 bg-blue-100 ')
-let Button     = twComponent('button', ' px-10 py-2 ')
-let BlueButton = twComponent(Button, ' bg-blue-600 text-white ')
+let UserSpace  = twComponent(' flex flex-col flex-grow-3 p-4 ')
+let Button     = twComponent('button', ' px-10 py-2 text-white ')
 
 let CpuBank = {
   view: ({ attrs: { states } }) => m(
@@ -68,9 +67,9 @@ export default () => ({
     ),
     m(
       'div',
-      m(BlueButton, { onclick: () => actions.AddToEventQueue(SampleFunctions.twoCalls()) }, 'Sym Fn'),
-      m(BlueButton, { onclick: () => actions.AddToEventQueue(SampleFunctions.netCall('oneCalls')) }, 'Sym Net Call'),
-      m(BlueButton, { onclick: () => actions.AddToEventQueue(SampleFunctions.timeoutCall(states().timeoutDelay, 'oneCalls')) }, 'Sym Timeout'),
+      m(Button, { class: 'bg-indigo-500', onclick: () => actions.AddToEventQueue(SampleFunctions.twoCalls()) }, 'Sym Fn'),
+      m(Button, { class: 'bg-green-500', onclick: () => actions.AddToEventQueue(SampleFunctions.netCall('oneCalls')) }, 'Sym Net Call'),
+      m(Button, { class: 'bg-red-500', onclick: () => actions.AddToEventQueue(SampleFunctions.timeoutCall(states().timeoutDelay, 'oneCalls')) }, 'Sym Timeout'),
     ),
   ),
 })

@@ -19,11 +19,11 @@ const AsyncCallList = {
     m(
       AsyncCallContainer,
       states().networkCalls.map(() => m(
-        twComponent(' p-2 bg-green-400 '),
+        twComponent(' p-2 bg-green-500 '),
         NetCallIcon,
       )),
       states().timeouts.map(() => m(
-        twComponent(' p-2 bg-orange-400 '),
+        twComponent(' p-2 bg-red-500 '),
         TimeoutIcon,
       )),
     ),
@@ -32,9 +32,9 @@ const AsyncCallList = {
 
 const colorByType = multi(
   ({ type }) => type,
-  method('onclick',          () => 'bg-blue-400'),
-  method('net callback',     () => 'bg-green-400'),
-  method('timeout callback', () => 'bg-orange-400'),
+  method('onclick',          () => 'bg-indigo-500'),
+  method('networkCallback',     () => 'bg-green-500'),
+  method('timeoutCallback', () => 'bg-red-500'),
 )
 
 let PendingFnWrapper  = twComponent(' h-20 w-20 ')
