@@ -23,5 +23,6 @@ module.exports = {
     "function-paren-newline": 0, // Disabled for cleaner hyperscript
     "no-unused-expressions": 0, // Not compatible with pipeline operator
     "semi": 0,
+    "indent": 0,
   },
 }

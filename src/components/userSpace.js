@@ -12,7 +12,7 @@ let CpuIcon = {
   view: ({ attrs: { states, cpu } }) => m(
     twComponent('img', ' w-full h-full '),
     {
-      class: cpu.thread ? 'animation-pulse' : 'filter-invert-75',
+      class: cpu.thread ? 'animation-pulse filter-invert-25' : 'filter-invert-75',
       src: cpuIcon,
       style: { animationDuration: `${states().clockSpeed / 1000}s` },
     },

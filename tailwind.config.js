@@ -1,5 +1,6 @@
 let tailwindTransitions = require('tailwindcss-transitions')()
 let tailwindAnimations = require('tailwindcss-animations')()
+let tailwindCustomForms = require('@tailwindcss/custom-forms')
 
 module.exports = {
   theme: {
@@ -29,6 +30,7 @@ module.exports = {
   plugins: [
     tailwindTransitions,
     tailwindAnimations,
+    tailwindCustomForms,
     function filter({ addUtilities }) {
       addUtilities({
         '.filter-invert': { filter: 'invert(1)' },
