@@ -1,4 +1,5 @@
 let tailwindTransitions = require('tailwindcss-transitions')()
+let tailwindTransforms = require('tailwindcss-transforms')()
 let tailwindAnimations = require('tailwindcss-animations')()
 let tailwindCustomForms = require('@tailwindcss/custom-forms')
 
@@ -24,10 +25,37 @@ module.exports = {
           transform: 'scale(0.9)',
         },
       },
+      'expand-up': {
+        from: {
+          transform: 'scale(1, 0)',
+        },
+        to: {
+          transform: 'scale(1, 1)',
+        },
+      },
+      'collapse-down': {
+        from: {
+          transform: 'scale(1, 1)',
+        },
+        to: {
+          transform: 'scale(1, 0)',
+        },
+      },
+    },
+    animationDuration: { // defaults to these values
+      default: '1s',
+      '200ms': '0.2s',
+      '0s': '0s',
+      '1s': '1s',
+      '2s': '2s',
+      '3s': '3s',
+      '4s': '4s',
+      '5s': '5s',
     },
   },
   variants: {},
   plugins: [
+    tailwindTransforms,
     tailwindTransitions,
     tailwindAnimations,
     tailwindCustomForms,

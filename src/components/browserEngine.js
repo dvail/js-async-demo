@@ -10,9 +10,21 @@ let HeadingStyle        = twComponent(' p-2 text-lg text-gray-700 ')
 let AsyncCallListLayout = twComponent(' bg-white mb-8 ')
 let AsyncCallContainer  = twComponent(' flex flex-row h-20 ')
 let IconStyle           = twComponent('img', ' w-16 h-16 filter-invert animation-pulse ')
-let AnimateSpeed       = { style: { animationDuration: "0.5s" } }
-let NetCallIcon         = m(IconStyle, { ...AnimateSpeed, src: networkIcon })
-let TimeoutIcon         = m(IconStyle, { ...AnimateSpeed, src: clockIcon })
+let AnimateSpeed        = { style: { animationDuration: "0.5s" } }
+let AsyncCallWrapper    = twComponent(' p-2 animation-expand-up animation-once animation-200ms transform-b ')
+
+let AsyncCall = ({ attrs: { iconSrc, bgColor } }) => ({
+  onbeforeremove: vnode => {
+    vnode.dom.classList.add('animation-collapse-down')
+    return new Promise(resolve => {
+      vnode.dom.addEventListener("animationend", resolve)
+    });
+  },
+  view: () => m(
+    twComponent(AsyncCallWrapper, bgColor),
+    m(IconStyle, { ...AnimateSpeed, src: iconSrc }),
+  ),
+})
 
 const AsyncCallList = {
   view: ({ attrs: { states } }) => m(
@@ -21,12 +33,12 @@ const AsyncCallList = {
     m(
       AsyncCallContainer,
       states().networkCalls.map(() => m(
-        twComponent(' p-2 bg-green-500 '),
-        NetCallIcon,
+        AsyncCall,
+        { iconSrc: networkIcon, bgColor: ' bg-green-500 ' },
       )),
       states().timeouts.map(() => m(
-        twComponent(' p-2 bg-red-500 '),
-        TimeoutIcon,
+        AsyncCall,
+        { iconSrc: clockIcon, bgColor: ' bg-red-500 ' },
       )),
     ),
   ),
@@ -39,17 +51,29 @@ const colorByType = multi(
   method('timeoutCallback', () => ({ bg: 'bg-red-500', text: 'text-red-500' })),
 )
 
-let PendingFnWrapper  = twComponent(' h-20 w-20 m-1 p-1 ')
+let PendingFnWrapper  = twComponent(` 
+  h-20 w-20 m-1 p-1 
+  transition-opacity opacity-0 opacity-100
+  animation-expand-up animation-once animation-200ms transform-b
+`)
 
-function PendingFn(fn) {
+let PendingFn = ({ attrs: { fn } }) => {
   let { bg, text } = colorByType(fn)
-  return m(
-    twComponent(PendingFnWrapper, bg),
-    m(
-      twComponent(` px-1 bg-white text-sm font-bold ${text} truncate `),
-      fn.type,
+  return {
+    onbeforeremove: vnode => {
+      vnode.dom.classList.remove('opacity-100')
+      return new Promise(resolve => {
+        vnode.dom.addEventListener("transitionend", resolve)
+      });
+    },
+    view: () => m(
+      twComponent(PendingFnWrapper, bg),
+      m(
+        twComponent(` px-1 bg-white text-sm font-bold ${text} truncate `),
+        fn.type,
+      ),
     ),
-  )
+  }
 }
 
 let EventQueueLayout  = twComponent(' bg-white mb-8 ')
@@ -90,7 +114,7 @@ let EventQueue = {
     m(
       EventQueueWrapper,
       m(NextEventIcon, { states }),
-      states().eventQueue.map(PendingFn),
+      states().eventQueue.map(fn => m(PendingFn, { fn })),
     ),
   ),
 }
