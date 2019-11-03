@@ -60,7 +60,7 @@ let JsRuntimeHeading = twComponent(' text-3xl ')
 export default () => ({
   view: ({ attrs: { states, actions } }) => m(
     UserSpace,
-    m(JsRuntimeHeading, 'JS Runtime'),
+    states().showBrowserEngine && m(JsRuntimeHeading, 'JS Runtime'),
     m(
       twComponent(' flex flex-row flex-grow '),
       m(CpuBank, { states }),

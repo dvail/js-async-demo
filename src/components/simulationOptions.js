@@ -61,7 +61,7 @@ let OptionsColumn = twComponent(' flex flex-col flex-grow-1 px-20 py-4 ')
 
 export default ({ attrs: { states, actions } }) => ({
   view: () => m(
-    twComponent(' flex flex-row bg-white border-t-2 border-solid border-gray-400 '),
+    twComponent(' flex flex-row bg-white border-t-2 border-solid border-gray-200 '),
     m(
       OptionsColumn,
       LabeledInput('Show Engine:', 'checkbox', {
