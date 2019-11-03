@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { filter, shuffle } from 'lodash'
 import m from 'mithril'
 
 import initMeiosis, { ThreadModel, CpuModel } from './appState';
@@ -61,9 +61,9 @@ setInterval(() => {
   let cpuThreadIds = cpus.map(cpu => cpu.thread)
   let currentActiveThreads = threads.filter(t => cpuThreadIds.includes(t.id))
   let threadsWaiting = threads
-    |> _.filter(?, t => !currentActiveThreads.includes(t))
-    |> _.filter(?, t => t.callstack.length)
-    |> _.shuffle // shuffle ensures threads do not get starved
+    |> filter(?, t => !currentActiveThreads.includes(t))
+    |> filter(?, t => t.callstack.length)
+    |> shuffle // shuffle helps ensures threads do not get starved
 
   cpusReadyToSwitch.forEach(cpu => {
     let candidateThread = threadsWaiting.find(t => cpu.t !== t)

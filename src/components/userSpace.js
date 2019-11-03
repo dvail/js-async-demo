@@ -6,14 +6,13 @@ import cpuIcon from '../../res/cpu.svg'
 
 import Thread from './thread'
 
-let JsRuntimeLayout  = twComponent(' flex flex-col bg-white flex-grow ')
-let JsRuntimeHeading = twComponent(' text-lg ')
+let JsRuntimeLayout  = twComponent(' flex flex-col flex-grow ')
 let CpuWrapper = twComponent(' w-20 h-20 mx-2 p-2 ')
 let CpuIcon = {
   view: ({ attrs: { states, cpu } }) => m(
     twComponent('img', ' w-full h-full '),
     {
-      class: cpu.thread ? 'animation-pulse' : 'filter-invert-50',
+      class: cpu.thread ? 'animation-pulse' : 'filter-invert-75',
       src: cpuIcon,
       style: { animationDuration: `${states().clockSpeed / 1000}s` },
     },
@@ -33,7 +32,6 @@ let CpuCell = {
 let JsRuntime = {
   view: ({ attrs: { states } }) => m(
     JsRuntimeLayout,
-    m(JsRuntimeHeading, 'JS Runtime'),
     m(
       twComponent(' flex flex-row flex-grow py-2 mx-1 '),
       states().threads.map(t => m(
@@ -57,19 +55,22 @@ let CpuBank = {
   ),
 }
 
+let JsRuntimeHeading = twComponent(' text-3xl ')
+
 export default () => ({
   view: ({ attrs: { states, actions } }) => m(
     UserSpace,
+    m(JsRuntimeHeading, 'JS Runtime'),
     m(
       twComponent(' flex flex-row flex-grow '),
       m(CpuBank, { states }),
       m(JsRuntime, { states, actions }),
     ),
     m(
-      'div',
-      m(Button, { class: 'bg-indigo-500', onclick: () => actions.AddToEventQueue(SampleFunctions.twoCalls()) }, 'Sym Fn'),
-      m(Button, { class: 'bg-green-500', onclick: () => actions.AddToEventQueue(SampleFunctions.netCall('oneCalls')) }, 'Sym Net Call'),
-      m(Button, { class: 'bg-red-500', onclick: () => actions.AddToEventQueue(SampleFunctions.timeoutCall(states().timeoutDelay, 'oneCalls')) }, 'Sym Timeout'),
+      twComponent(' m-2 flex flex-row justify-around '),
+      m(Button, { class: 'bg-indigo-500', onclick: () => actions.AddToEventQueue(SampleFunctions.twoCalls()) }, 'Simulate Fn'),
+      m(Button, { class: 'bg-green-500', onclick: () => actions.AddToEventQueue(SampleFunctions.netCall('oneCalls')) }, 'Simulate Net Call'),
+      m(Button, { class: 'bg-red-500', onclick: () => actions.AddToEventQueue(SampleFunctions.timeoutCall(states().timeoutDelay, 'oneCalls')) }, 'Simulate Timeout'),
     ),
   ),
 })

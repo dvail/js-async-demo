@@ -5,7 +5,7 @@ import BrowserEngine from './browserEngine'
 import UserSpace from './userSpace'
 import SimulationOptions from './simulationOptions'
 
-let AppLayout = twComponent(' h-full flex flex-col bg-orange-100 ')
+let AppLayout = twComponent(' h-full flex flex-col bg-orange-100 font-sans ')
 let SimulationLayout = twComponent(' h-full flex flex-row bg-orange-100 ')
 
 export default () => ({

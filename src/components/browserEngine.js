@@ -8,7 +8,7 @@ import { twComponent } from '../util'
 
 let AsyncCallListLayout = twComponent(' bg-white ')
 let AsyncCallHeading    = twComponent(' text-lg ')
-let AsyncCallContainer  = twComponent(' flex flex-row ')
+let AsyncCallContainer  = twComponent(' flex flex-row h-20 ')
 let NetCallIcon         = m(twComponent('img', ' w-16 h-16 filter-invert '), { src: networkIcon })
 let TimeoutIcon         = m(twComponent('img', ' w-16 h-16 filter-invert '), { src: clockIcon })
 
@@ -49,7 +49,7 @@ function PendingFn(fn) {
 
 let EventQueueLayout  = twComponent(' bg-white ')
 let EventQueueHeading = twComponent(' text-lg ')
-let EventQueueWrapper = twComponent(' flex flex-row-reverse ')
+let EventQueueWrapper = twComponent(' flex flex-row-reverse h-20 ')
 
 function NextEventIcon({ attrs: { states } }) {
   let transitionClasses = [
@@ -73,7 +73,7 @@ function NextEventIcon({ attrs: { states } }) {
       queueLength = nextQueueLength
     },
     view: ({ attrs: { states } }) => m(
-      twComponent('img', ' w-16 h-16 filter-invert-50 '),
+      twComponent('img', ' w-16 h-16 filter-invert-75 '),
       { src: refreshIcon },
     ),
   }
@@ -91,12 +91,12 @@ let EventQueue = {
   ),
 }
 
-let BrowserEngine = twComponent(' flex flex-col flex-grow-2 p-4 bg-red-100 ')
+let BrowserEngine = twComponent(' flex flex-col flex-grow-2 p-4 ')
 
 export default () => ({
   view: ({ attrs: { states, actions } }) => m(
     BrowserEngine,
-    m('h2', 'Browser Engine'),
+    m(twComponent('h2', ' mb-4 text-3xl '), 'Browser Engine'),
     m(AsyncCallList, { states, actions }),
     m(EventQueue, { states, actions }),
   ),
