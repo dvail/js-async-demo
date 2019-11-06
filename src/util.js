@@ -6,6 +6,6 @@ function toClasses(classList) {
     .join('')
 }
 
-export function twComponent(base, classes) {
+export function tw(base, classes) {
   return classes ? `${base}${toClasses(classes)}` : toClasses(base)
 }

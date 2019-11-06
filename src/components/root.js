@@ -1,12 +1,12 @@
 import m from 'mithril'
 
-import { twComponent } from '../util'
+import { tw } from '../util'
 import BrowserEngine from './browserEngine'
 import UserSpace from './userSpace'
 import SimulationOptions from './simulationOptions'
 
-let AppLayout = twComponent(' h-full flex flex-col bg-orange-100 font-sans ')
-let SimulationLayout = twComponent(' h-full flex flex-row bg-orange-100 ')
+let AppLayout = tw(' h-full flex flex-col bg-orange-100 font-sans ')
+let SimulationLayout = tw(' h-full flex flex-row bg-orange-100 ')
 
 export default () => ({
   view: ({ attrs: { states, actions } }) => m(

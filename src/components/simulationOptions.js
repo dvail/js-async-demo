@@ -1,6 +1,6 @@
 import m from 'mithril'
 
-import { twComponent } from '../util'
+import { tw } from '../util'
 
 function cpuCountChange(e, actions) {
   let newCount = parseInt(e.target.value, 10);
@@ -43,13 +43,13 @@ function timeoutDelayChange(e, actions) {
 function LabeledInput(label, type, inputAttrs) {
   let inputStyle = type === 'checkbox' ? 'form-checkbox text-indigo-700 h-6 w-6' : 'px-2 py-1 w-3/4'
   return m(
-    twComponent('label', ' p-1 '),
+    tw('label', ' p-1 '),
     m(
-      twComponent('span', ' w-1/4 inline-block '),
+      tw('span', ' w-1/4 inline-block '),
       label,
     ),
     m(
-      twComponent(`input[type="${type}"]`, `
+      tw(`input[type="${type}"]`, `
         border border-solid bg-gray-200 inline-block ${inputStyle}
       `),
       inputAttrs,
@@ -57,11 +57,11 @@ function LabeledInput(label, type, inputAttrs) {
   )
 }
 
-let OptionsColumn = twComponent(' flex flex-col flex-grow-1 px-20 py-4 ')
+let OptionsColumn = tw(' flex flex-col flex-grow-1 px-20 py-4 ')
 
 export default ({ attrs: { states, actions } }) => ({
   view: () => m(
-    twComponent(' flex flex-row bg-white border-t-2 border-solid border-gray-200 '),
+    tw(' flex flex-row bg-white border-t-2 border-solid border-gray-200 '),
     m(
       OptionsColumn,
       LabeledInput('Show Engine:', 'checkbox', {

@@ -4,24 +4,24 @@ import { multi, method } from '@arrows/multimethod'
 import clockIcon from '../../res/timer.svg'
 import networkIcon from '../../res/network.svg'
 import refreshIcon from '../../res/refresh.svg'
-import { twComponent } from '../util'
+import { tw } from '../util'
 
-let HeadingStyle        = twComponent(' p-2 text-lg text-gray-700 ')
-let AsyncCallListLayout = twComponent(' bg-white mb-8 ')
-let AsyncCallContainer  = twComponent(' flex flex-row h-20 ')
-let IconStyle           = twComponent('img', ' w-16 h-16 filter-invert animation-pulse ')
+let HeadingStyle        = tw(' p-2 text-lg text-gray-700 ')
+let AsyncCallListLayout = tw(' bg-white mb-8 ')
+let AsyncCallContainer  = tw(' flex flex-row h-20 ')
+let IconStyle           = tw('img', ' w-16 h-16 filter-invert animation-pulse ')
 let AnimateSpeed        = { style: { animationDuration: "0.5s" } }
-let AsyncCallWrapper    = twComponent(' p-2 animation-expand-up animation-once animation-200ms transform-b ')
+let AsyncCallWrapper    = tw(' p-2 animation-expand-up animation-once animation-200ms transform-b ')
 
 let AsyncCall = ({ attrs: { iconSrc, bgColor } }) => ({
   onbeforeremove: vnode => {
     vnode.dom.classList.add('animation-collapse-down')
     return new Promise(resolve => {
       vnode.dom.addEventListener("animationend", resolve)
-    });
+    })
   },
   view: () => m(
-    twComponent(AsyncCallWrapper, bgColor),
+    tw(AsyncCallWrapper, bgColor),
     m(IconStyle, { ...AnimateSpeed, src: iconSrc }),
   ),
 })
@@ -44,42 +44,43 @@ const AsyncCallList = {
   ),
 }
 
-const colorByType = multi(
-  ({ type }) => type,
-  method('onclick',         () => ({ bg: 'bg-indigo-500', text: 'text-indigo-500' })),
-  method('networkCallback', () => ({ bg: 'bg-green-500', text: 'text-green-500' })),
-  method('timeoutCallback', () => ({ bg: 'bg-red-500', text: 'text-red-500' })),
-)
+function PendingFn() {
+  let colorByType = multi(
+    ({ type }) => type,
+    method('onclick', () => ({ bg: 'bg-indigo-500', text: 'text-indigo-500' })),
+    method('networkCallback', () => ({ bg: 'bg-green-500', text: 'text-green-500' })),
+    method('timeoutCallback', () => ({ bg: 'bg-red-500', text: 'text-red-500' })),
+  )
 
-let PendingFnWrapper  = twComponent(` 
-  h-20 w-20 m-1 p-1 
-  transition-opacity opacity-0 opacity-100
-  animation-expand-up animation-once animation-200ms transform-b
-`)
+  let PendingFnWrapper = tw(` 
+    h-20 w-20 m-1 p-1 
+    transition-opacity opacity-0 opacity-100
+    animation-expand-up animation-once animation-200ms transform-b
+  `)
 
-let PendingFn = () => {
-  return {
-    onbeforeremove: vnode => {
-      vnode.dom.classList.remove('opacity-100')
-      return new Promise(resolve => {
-        vnode.dom.addEventListener("transitionend", resolve)
-      });
-    },
-    view: ({ attrs: { fn } }) => {
-      let { bg, text } = colorByType(fn)
-      return m(
-        twComponent(PendingFnWrapper, bg),
-        m(
-          twComponent(` px-1 bg-white text-sm font-bold ${text} truncate `),
-          fn.type,
-        ),
-      )
-    },
+  let onbeforeremove = vnode => {
+    vnode.dom.classList.remove('opacity-100')
+    return new Promise(resolve => {
+      vnode.dom.addEventListener("transitionend", resolve)
+    })
   }
+
+  let view = ({ attrs: { fn } }) => {
+    let { bg, text } = colorByType(fn)
+    return m(
+      tw(PendingFnWrapper, bg),
+      m(
+        tw(` px-1 bg-white text-sm font-bold ${text} truncate `),
+        fn.type,
+      ),
+    )
+  }
+
+  return { onbeforeremove, view }
 }
 
-let EventQueueLayout  = twComponent(' bg-white mb-8 ')
-let EventQueueWrapper = twComponent(' flex flex-row-reverse h-24 ')
+let EventQueueLayout  = tw(' bg-white mb-8 ')
+let EventQueueWrapper = tw(' flex flex-row-reverse h-24 ')
 
 function NextEventIcon({ attrs: { states } }) {
   let transitionClasses = [
@@ -103,7 +104,7 @@ function NextEventIcon({ attrs: { states } }) {
       queueLength = nextQueueLength
     },
     view: ({ attrs: { states } }) => m(
-      twComponent('img', ' w-16 h-16 filter-invert-75 '),
+      tw('img', ' w-16 h-16 filter-invert-75 '),
       { src: refreshIcon },
     ),
   }
@@ -121,12 +122,12 @@ let EventQueue = {
   ),
 }
 
-let BrowserEngine = twComponent(' flex flex-col flex-grow-2 p-4 ')
+let BrowserEngine = tw(' flex flex-col flex-grow-2 p-4 ')
 
 export default () => ({
   view: ({ attrs: { states, actions } }) => m(
     BrowserEngine,
-    states().showBrowserEngine && m(twComponent('h2', ' mb-4 text-3xl '), 'Browser Engine'),
+    states().showBrowserEngine && m(tw('h2', ' mb-4 text-3xl '), 'Browser Engine'),
     m(AsyncCallList, { states, actions }),
     m(EventQueue, { states, actions }),
   ),

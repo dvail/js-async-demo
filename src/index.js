@@ -1,7 +1,7 @@
 import { filter, shuffle } from 'lodash'
 import m from 'mithril'
 
-import initMeiosis, { ThreadModel, CpuModel } from './appState';
+import initMeiosis, { ThreadModel, CpuModel } from './appState'
 import Root from './components/root'
 
 import './index.css'
@@ -30,7 +30,7 @@ window.app = new Proxy({
 }, {
   get: (obj, prop) => {
     if (prop === 'actions') window.requestAnimationFrame(m.redraw)
-    return obj[prop];
+    return obj[prop]
   },
 })
 
@@ -77,4 +77,4 @@ setInterval(() => {
 
 const mRoot = document.querySelector('.app')
 
-m.mount(mRoot, { view: () => m(Root, { states, actions }) });
+m.mount(mRoot, { view: () => m(Root, { states, actions }) })
