@@ -41,16 +41,31 @@ module.exports = {
           transform: 'scale(1, 0)',
         },
       },
+      helix: {
+        '0%': {
+          transform: 'translate(-12px) scale(1.1)',
+        },
+        '50%': {
+          transform: 'translate(12px) scale(0.9)',
+        },
+        '100%': {
+          transform: 'translate(-12px) scale(1.1)',
+        },
+      },
     },
     animationDuration: { // defaults to these values
       default: '1s',
       '200ms': '0.2s',
+      '500ms': '0.5s',
       '0s': '0s',
       '1s': '1s',
       '2s': '2s',
       '3s': '3s',
       '4s': '4s',
       '5s': '5s',
+    },
+    animationTimingFunction: {
+      circular: 'cubic-bezier(0.42 , 0, 0.58, 1)',
     },
   },
   variants: {},
