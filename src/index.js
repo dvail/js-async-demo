@@ -7,7 +7,7 @@ import Root from './components/root'
 import './index.css'
 
 const initialState = {
-  showBrowserEngine: true,
+  showBrowserEngine: false,
   clockSpeed: 250,
   timeoutDelay: 1200,
   threads: [

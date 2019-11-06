@@ -5,11 +5,11 @@ import { tw } from '../util'
 
 function ThreadHelix() {
   let Point = tw(`
-    relative h-1 w-1 mb-2 m-auto
-    bg-red-900 rounded-full
+    relative h-2 w-2 mb-2 m-auto
+    bg-red-500 rounded-full
     opacity-50
     animation-helix animation-circular
-    animation-2s
+    animation-1s
   `)
 
   let view = () => {
@@ -17,7 +17,7 @@ function ThreadHelix() {
       tw('absolute m-auto w-full text-center'),
       range(100).map(n => m(
         Point,
-        { style: `animation-delay: -${n * 250}ms` },
+        { style: `animation-delay: -${n * 150}ms` },
       )),
     )
   }
@@ -29,7 +29,7 @@ function ThreadStack({ attrs: { model } }) {
   let LineStyle        = tw(' m-1 px-2 rounded ')
   let DoneLineStyle    = tw(LineStyle, ' bg-white font-bold ')
   let PendingLineStyle = tw(LineStyle, ' bg-white opacity-50 ')
-  let ThreadStyle      = tw(' text-xs transition-opacity opacity-0 ')
+  let ThreadStyle      = tw(' z-10 text-xs transition-opacity opacity-0 ')
 
   let CallClassColors = {
     onclick: 'bg-indigo-500 text-indigo-500',
@@ -62,7 +62,7 @@ function ThreadStack({ attrs: { model } }) {
 
 
 export default function Thread() {
-  let ThreadContainer  = tw(' overflow-hidden relative flex flex-col-reverse bg-red-200 h-full w-20 mx-2 ')
+  let ThreadContainer  = tw(' overflow-hidden relative flex flex-col-reverse h-full w-20 mx-2 ')
 
   let view = ({ attrs: { model } }) => m(
     ThreadContainer,
