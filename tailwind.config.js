@@ -4,6 +4,10 @@ let tailwindAnimations = require('tailwindcss-animations')()
 let tailwindCustomForms = require('@tailwindcss/custom-forms')
 
 module.exports = {
+  purge: [
+    './src/**/*.html',
+    './src/**/*.js',
+  ],
   theme: {
     extend: {},
     fontFamily: {
