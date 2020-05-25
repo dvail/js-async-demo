@@ -1,5 +1,5 @@
 import m from 'mithril'
-import { range } from 'lodash'
+import range from 'lodash/range'
 
 import { tw } from '../util'
 

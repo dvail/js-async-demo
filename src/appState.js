@@ -1,13 +1,14 @@
 import stream from 'mithril/stream'
 import produce from 'immer'
-import _ from 'lodash'
 import { multi, method } from '@arrows/multimethod'
+import uniqueId from 'lodash/uniqueId'
+import last from 'lodash/last'
 
 import { SampleFunctions } from './syntheticFns'
 
 export function ThreadModel(fn) {
   return {
-    id: _.uniqueId('thread-'),
+    id: uniqueId('thread-'),
     callstack: fn ? [fn] : [],
     callOriginator: fn ? fn.type : undefined,
   }
@@ -15,7 +16,7 @@ export function ThreadModel(fn) {
 
 export function CpuModel(thread, activeTime) {
   return {
-    id: _.uniqueId('cpu-'),
+    id: uniqueId('cpu-'),
     thread,
     activeTime,
   }
@@ -121,7 +122,7 @@ export default function initMeiosis(initialState = {}) {
       next.threads
         .filter(t => activeThreadIds.includes(t.id))
         .forEach(thread => {
-          let topOfStack = _.last(thread.callstack, null)
+          let topOfStack = last(thread.callstack, null)
 
           if (!topOfStack) return
 

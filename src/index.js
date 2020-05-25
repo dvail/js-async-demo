@@ -1,4 +1,5 @@
-import { filter, shuffle } from 'lodash'
+import filter from 'lodash/filter'
+import shuffle from 'lodash/shuffle'
 import m from 'mithril'
 
 import initMeiosis, { ThreadModel, CpuModel } from './appState'
