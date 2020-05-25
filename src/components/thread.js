@@ -15,7 +15,7 @@ function ThreadHelix() {
   let view = () => {
     return m(
       tw('absolute m-auto w-full text-center'),
-      range(100).map(n => m(
+      range(50).map(n => m(
         Point,
         { style: `animation-delay: -${n * 150}ms` },
       )),
@@ -31,14 +31,11 @@ function ThreadStack({ attrs: { model } }) {
   let PendingLineStyle = tw(LineStyle, ' bg-white opacity-50 ')
   let ThreadStyle      = tw(' z-10 text-xs transition-opacity opacity-0 ')
 
-  let CallClassColors = {
+  let callClassColor = {
     onclick: 'bg-indigo-500 text-indigo-500',
     networkCallback: 'bg-green-500 text-green-500',
     timeoutCallback: 'bg-red-500 text-red-500',
-  }
-
-  let { callOriginator } = model
-  let callClassColor = CallClassColors[callOriginator] || 'bg-gray-400'
+  }[model.callOriginator] || 'bg-gray-400'
 
   let oncreate = vnode => {
     window.requestAnimationFrame(() => vnode.dom.classList.add('opacity-100'))
